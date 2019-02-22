@@ -18,11 +18,7 @@
         <h2>Generate code</h2>
         <button id="genCode">Generate</button>
         <blockquote>
-            <pre>
-                <code id="code">
-                    <br>
-                </code>
-            </pre>
+            <pre><code id="code"></code></pre><!--This can't be formatted due to how "<pre>" tag works-->
         </blockquote>
     </div>
 </body>
@@ -62,39 +58,41 @@
 
     //cluster of variables to store positional information
     var x, y = 0;//Width and height of the image
-   
+    var x1, y1, x2, y2 = 0;//coords for first point and second point
 
-    var x1, y1, x2, y2 = 0;
-
+    //when the user inputs an image it is imidiatly displayed
     document.getElementById("file").onchange = function(){
-        console.log("1");
-        file = document.getElementById("file").files[0];
 
+        //image file
+        file = document.getElementById("file").files[0];
+        
         var img = new Image();
         
+        //create a temporary url for the program to use
         img.src = URL.createObjectURL(file);
         
         img.onload = function(){
-            //Things that happen when the image has loaded.
-            x = img.width;
-            y = img.height;
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            x = img.width;//width of img
+            y = img.height;//height of img
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);//display img
         }
     }   
     //Variables for tracking and controlling the creation of imagemaps
     var startDraw = false; //tracks if the "create new box" button has been pressed
     var stage = 0;//keeps track of where in the image map process the user is inn
-
-    function draw(){
-        //badly named function for starting the drawing and generator process
+    
+    //badly named function for starting the drawing and generator process
+    function draw(){    
         startDraw = true;
     }
 
+    //area and point generation
     canvas.onclick = function(evt){
+        //if user has pressed the "Create new box" button start generating process
         if(startDraw){
             switch (stage) {
                 case 0://first stage
-                    
+                    //get coords of mouseclick
                     x1 = evt.offsetX;
                     y1 = evt.offsetY;
 
@@ -103,10 +101,10 @@
                     ctx.arc(x1, y1, 2, 0, 2 * Math.PI);
                     ctx.stroke();
                     
-                    stage = 1;
+                    stage = 1;//advance to next stage
                     break;
                 case 1: //Second stage
-                    
+                    //get coords of mouseclick
                     x2 = evt.offsetX;
                     y2 = evt.offsetY;
                     
@@ -119,27 +117,26 @@
                     ctx.rect(x1, y1, x2 - x1, y2 - y1);
                     ctx.stroke();
 
-                    addNewArea(mapArea, x, y, canvas.width, canvas.height, x1, y1, x2, y2);
+                    addNewArea(mapArea, x, y, canvas.width, canvas.height, x1, y1, x2, y2);//create new <area> tag with info
 
                     //Resett the tracking vars
                     stage = 0;
                     startDraw = false;
                     break;
-                default:
-                    break;
             }
         }
     }
+    
+    //generate code template for user
     genCode.onclick = function(){
-        code.innerHTML = "";
-        code.innerHTML += "&ltimg src=\"#\" width=\" \" height=\"\" usemap=\"mapname\"&gt <br>";
-        code.innerHTML += "&ltmap name=\"mapname\"&gt<br>";
-            for (let i = 0; i < mapArea.length; i++) {
+        code.innerHTML = "";//empty code
+        code.innerHTML += "&ltimg src=\"#\" width=\" \" height=\"\" usemap=\"mapname\"&gt <br>";//add template <img> tag
+        code.innerHTML += "&ltmap name=\"mapname\"&gt<br>";//add <map>tag
+            for (let i = 0; i < mapArea.length; i++) {//loop over all areas the user has created and add them too <map>
                 code.innerHTML += "    " + mapArea[i];
                 
             }
-        code.innerHTML += "&lt/map&gt";
+        code.innerHTML += "&lt/map&gt";//close <map> tag
     }
-
 </script>
 </html>
