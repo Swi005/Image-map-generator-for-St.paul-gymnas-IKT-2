@@ -10,9 +10,9 @@
     
     <canvas id="canvas"></canvas>
     
-    <div>
+    <div id="box overview">
         <h2>Create Points</h2>
-        <button id="newBox" onclick="draw()">Add new box</button>
+        <button id="newBox" onclick="createNewPoint()">Add new box</button>
     </div>
     <div>
         <h2>Generate code</h2>
@@ -49,6 +49,8 @@
     
     //get html elements
     var imgContent = document.getElementById("imgManip");
+    var boxOverview = document.getElementById("box overview");
+
     var genCode = document.getElementById("genCode");
     var code = document.getElementById("code");
     var content = document.getElementById("upload");
@@ -83,7 +85,7 @@
     var stage = 0;//keeps track of where in the image map process the user is inn
     
     //badly named function for starting the drawing and generator process
-    function draw(){    
+    function createNewPoint(){    
         startDraw = true;
     }
 
@@ -108,7 +110,7 @@
                     //get coords of mouseclick
                     x2 = evt.offsetX;
                     y2 = evt.offsetY;
-                    
+                    boxOverview.innerHTML += 
                     //place second point
                     ctx.beginPath();
                     ctx.arc(x2, y2, 2, 0, 2 * Math.PI);
