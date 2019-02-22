@@ -19,25 +19,28 @@
 <script src="imageMapFuncs.js"></script>
 
 <script>
+    var mapArea = [];
+
+    //canvas variables
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     canvas.width = 400;
     canvas.height = 300;
-
+    
+    //get html elements
     var imgContent = document.getElementById("imgManip");
     var content = document.getElementById("upload");
     var newBox = document.getElementById("newBox");
-    var file;
     var next0 = document.getElementById("next0");
 
-    //cluster of variables to store positional information
-    var x = 0;//Width of image
-    var y = 0;//Height of image
+    //file variable
+    var file;
 
-    var x1 = 0;
-    var y1 = 0;
-    var x2 = 0;
-    var y2 = 0;
+    //cluster of variables to store positional information
+    var x, y = 0;//Width and height of the image
+   
+
+    var x1, y1, x2, y2 = 0;
 
     next0.onclick = function(){
         console.log("1");
@@ -51,8 +54,8 @@
             //Things that happen when the image has loaded.
             x = img.width;
             y = img.height;
-            console.log("First: " + x + " : " + y);
-            ctx.drawImage(img, 0, 0, 400, 300);
+            //console.log("First: " + x + " : " + y);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         }
     }   
     //Variables for tracking and controlling the creation of imagemaps
@@ -93,7 +96,7 @@
                     ctx.rect(x1, y1, x2 - x1, y2 - y1);
                     ctx.stroke();
 
-                    //execute code to generate imagemap
+                    addNewArea();
 
                     //Resett the tracking vars
                     stage = 0;
