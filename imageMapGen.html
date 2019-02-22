@@ -96,7 +96,7 @@
                     ctx.rect(x1, y1, x2 - x1, y2 - y1);
                     ctx.stroke();
 
-                    addNewArea();
+                    addNewArea(mapArea, x, y, canvas.width, canvas.height, x1, y1, x2, y2);
 
                     //Resett the tracking vars
                     stage = 0;
