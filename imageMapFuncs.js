@@ -8,5 +8,5 @@ function addNewArea(areaArr, Ximg, Yimg, Xcanvas, Ycanvas, x1, y1, x2, y2){
     //adjust coords
     x1, x2 *= ratioX;
     y1, y2 *= ratioY;
-    areaArr.push(`<area shape="rect" coords="{x1} , {y1}, {x2}, {y2}" href="#">`);
+    areaArr.push("&ltarea shape=\"rect\" coords=" + Math.round(x1) + ", " + Math.round(y1) + ", " + Math.round(x2) + ", " + Math.round(y2) + " href=\"#\"&gt <br>");
 }

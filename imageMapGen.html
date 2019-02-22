@@ -6,7 +6,6 @@
     <div id="upload">
         <h1>Upload your File!</h1>
         <input id="file" type="file">
-        <button id="next0">Next Step</button>
     </div>
     
     <canvas id="canvas"></canvas>
@@ -15,9 +14,16 @@
         <h2>Create Points</h2>
         <button id="newBox" onclick="draw()">Add new box</button>
     </div>
-    <div id="code">
+    <div>
         <h2>Generate code</h2>
         <button id="genCode">Generate</button>
+        <blockquote>
+            <pre>
+                <code id="code">
+                    <br>
+                </code>
+            </pre>
+        </blockquote>
     </div>
 </body>
 <script src="imageMapFuncs.js"></script>
@@ -37,7 +43,6 @@
     var code = document.getElementById("code");
     var content = document.getElementById("upload");
     var newBox = document.getElementById("newBox");
-    var next0 = document.getElementById("next0");
 
     //file variable
     var file;
@@ -48,7 +53,7 @@
 
     var x1, y1, x2, y2 = 0;
 
-    next0.onclick = function(){
+    document.getElementById("file").onchange = function(){
         console.log("1");
         file = document.getElementById("file").files[0];
 
@@ -113,7 +118,14 @@
         }
     }
     genCode.onclick = function(){
-        //code for displaying generated html code
+        code.innerHTML = "";
+        code.innerHTML += "&ltimg src=\"#\" width=\" \" height=\"\" usemap=\"mapname\"&gt <br>";
+        code.innerHTML += "&ltmap name=\"mapname\"&gt<br>";
+            for (let i = 0; i < mapArea.length; i++) {
+                code.innerHTML += "    " + mapArea[i];
+                
+            }
+        code.innerHTML += "&lt/map&gt";
     }
 
 </script>
